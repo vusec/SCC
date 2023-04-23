@@ -1,0 +1,32 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3 git ninja-build clang build-essential
+    - name: Build
+      run: |
+        mkdir build
+        cd build
+        cmake -GNinja ..
+        ninja
+    - name: Run tests
+      run: |
+        cd build
+        ctest . --output-on-failure --timeout 300
