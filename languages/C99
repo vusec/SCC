@@ -1,0 +1,3 @@
+[general]
+std = "c99"
+exceptions = false

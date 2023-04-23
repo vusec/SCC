@@ -1,0 +1,16 @@
+*.user
+build
+rel
+dbg
+test/status
+test/fails
+test/found
+oracles/out
+ubsan
+asan
+start-*.sh
+**/__pycache__
+.rel
+.dbg
+*.autosave
+*.save
