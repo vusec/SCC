@@ -1,0 +1,5 @@
+LANG_OPT(std::string, standard, "std", "c99")
+LANG_OPT(bool, HasUInt128, "uint128", false)
+LANG_OPT(bool, Asm, "asm", true)
+LANG_OPT(bool, Exceptions, "exceptions", false)
+#undef LANG_OPT

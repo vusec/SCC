@@ -1,0 +1,27 @@
+#ifndef BUILTIN_F
+#error "Failed to define BUILTIN_F"
+#endif
+BUILTIN_F(Malloc,   malloc,   "stdlib.h",   void_ptr)
+BUILTIN_F(Calloc,   calloc,   "stdlib.h",   void_ptr)
+BUILTIN_F(Free,     free,     "stdlib.h",   Void())
+BUILTIN_F(Realloc,  realloc,  "stdlib.h",   void_ptr)
+BUILTIN_F(Alloca,   alloca,   "alloca.h",   void_ptr)
+BUILTIN_F(MemMove,  memmove,  "string.h",   void_ptr)
+BUILTIN_F(MemCpy,   memcpy,   "string.h",   void_ptr)
+BUILTIN_F(MemChr,   memchr,   "string.h",   b.const_void_ptr)
+BUILTIN_F(MemCmp,   memcmp,   "string.h",   p.getBuiltin().signed_int)
+BUILTIN_F(MemSet,   memset,   "string.h",   void_ptr)
+BUILTIN_F(StrCmp,   strcmp,   "string.h",   b.signed_int)
+BUILTIN_F(StrNCmp,  strncmp,  "string.h",   p.getBuiltin().signed_int)
+BUILTIN_F(StrStr,   strstr,   "string.h",   b.const_char_ptr)
+BUILTIN_F(StrCaseStr,   strcasestr,   "string.h",   b.const_char_ptr)
+BUILTIN_F(StrCpy,   strcpy,   "string.h",   b.char_ptr)
+BUILTIN_F(StrNCpy,  strncpy,  "string.h",   b.char_ptr)
+BUILTIN_F(Strlen,   strlen,   "string.h",   p.getBuiltin().unsigned_long_long)
+BUILTIN_F(StrNlen,  strnlen,  "string.h",   p.getBuiltin().unsigned_long_long)
+BUILTIN_F(Exit,     exit,     "stdlib.h",   Void())
+BUILTIN_F(Abort,    abort,    "stdlib.h",   Void())
+BUILTIN_F(Printf,   printf,   "stdio.h",    Void())
+BUILTIN_F(GetChar,   getchar, "stdio.h",    b.signed_int)
+
+#undef BUILTIN_F

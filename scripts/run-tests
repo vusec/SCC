@@ -1,0 +1,10 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+
+cd ..
+mkdir .rel
+set -e
+cd .rel
+cmake -DCMAKE_BUILD_TYPE=Release -GNinja ..
+ninja
+ctest . --output-on-failure

@@ -1,0 +1,16 @@
+add_module(mutator-utils
+  COMPONENTS
+    GeneratorUtils
+    MutatorBase
+    ProgramCache
+    RecursionLimit
+    Reducer
+    Rng
+    SchedulerBase
+    Scheduler
+    StrategyBase
+    StrategyInstance
+    TypeGarbageCollector
+  DEPENDENCIES
+    scc-program
+)

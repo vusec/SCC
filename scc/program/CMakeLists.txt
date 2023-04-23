@@ -1,0 +1,27 @@
+add_module(program
+  COMPONENTS
+    Builtin
+    BuiltinFunctions
+    BuiltinTypes
+    Decl
+    DeclStorage
+    Dependencies
+    Function
+    GlobalVar
+    IdentTable
+    LangOpts
+    NamedDecl
+    NamespaceDecl
+    PrintState
+    Program
+    RecordDecl
+    Scope
+    Statement
+    Type
+    TypeTable
+    Variable
+  EXTERN_LIBS
+    tomlpp
+  DEPENDENCIES
+    scc-utils
+)
