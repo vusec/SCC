@@ -1,5 +1,7 @@
 # Suborbital-C-Cannon
 
+![status badge](https://github.com/vusec/scc/actions/workflows/tests.yml/badge.svg)
+
 Suborbital-C-Cannon, or **SCC**, is a framework for generating and mutating
 random programs.
 
