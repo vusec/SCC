@@ -69,7 +69,7 @@ void StatusView::draw(const DriverState &state) {
 
   {
     auto window = DriverUtils::getTerminalSize();
-    FancyProgramPrinter str(window.ws_row - 15, window.ws_col - 1, startLine);
+    FancyProgramPrinter str(window.ws_row - 16, window.ws_col - 2, startLine);
     p.print(str).assumeSuccess("Failed to print program for UI");
   }
   std::cout.flush();
