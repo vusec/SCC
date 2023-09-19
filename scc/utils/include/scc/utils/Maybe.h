@@ -23,14 +23,18 @@ public:
 
   explicit operator bool() const { return !isErr(); }
 
-  Error takeError() const {
+  [[nodiscard]] Error takeError() const {
     SCCAssert(isErr(), "Trying to take error of Maybe without error");
     return std::get<Error>(storage);
   }
 
-  std::string getErrorMsg() const { return takeError().getMessage(); }
+  [[nodiscard]] std::string getErrorMsg() const {
+    return takeError().getMessage();
+  }
 
-  bool isErr() const { return std::get_if<Error>(&storage) != nullptr; }
+  [[nodiscard]] bool isErr() const {
+    return std::get_if<Error>(&storage) != nullptr;
+  }
 
   const T &assumeValid(const char *msg) const {
     SCCAssert(!isErr(), "Assumption failed: " + std::string(msg));
