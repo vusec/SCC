@@ -3,6 +3,7 @@
 #include "scc/driver/DriverUtils.h"
 
 #include <filesystem>
+#include <sstream>
 
 DriverState::DriverState(SchedulerBase &scheduler, std::string evalCommand,
                          std::string saveDir)
