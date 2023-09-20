@@ -13,8 +13,8 @@ DeclStorage &DeclStorage::operator=(const DeclStorage &o) {
 }
 
 OptError DeclStorage::print(PrintState &state) const {
-  // Print all the includes. These are already filtered by already printed
-  // includes from the printer.
+  // Print all the includes. These will deduplicated by the list of already
+  // printed includes within the printer.
   if (!state.getOut().isInformalOutput())
     for (const auto &d : decls)
       d->printIncludes(state);

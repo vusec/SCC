@@ -66,7 +66,9 @@ void FancyProgramPrinter::writeImpl(std::string_view s) {
       // We're at the beginning of the line, so print the line number first.
       if (atStartOfLine) {
         atStartOfLine = false;
-        std::cout << "\n";
+        // Don't print a newline in the first line.
+        if (lineIndex > 1)
+          std::cout << "\n";
         printLinePrefix(lineIndex);
       }
       // Print the actual character.
