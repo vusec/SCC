@@ -191,7 +191,7 @@ public:
 
   bool finished() const {
     // If we're supposed to stop after a certain amount of findings then stop.
-    if (stopAfterHits != 0 && numFindings > stopAfterHits)
+    if (stopAfterHits != 0 && numFindings >= stopAfterHits)
       return true;
     return nonCacheIterations >= stopAfterNIterations;
   }
