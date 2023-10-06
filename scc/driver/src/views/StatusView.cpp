@@ -90,10 +90,12 @@ void StatusView::handleInput(const Input &input, DriverState &state) {
     case 'c':
       state.scheduler.requestQueueReset();
       break;
-    case 's': {
-      state.saveProg(state.lastProg, "saved_");
+    case 's':
+      state.saveProg(state.scheduler.getBestProg(), "saved_");
       break;
-    }
+    case 'x':
+      state.saveProg(state.lastProg, "current_");
+      break;
 
     case ' ':
       if (state.manualStepping)
