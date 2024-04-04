@@ -147,12 +147,12 @@ protected:
 public:
   /// Creates a scheduler that mutates a new program.
   SchedulerBase(FeedbackFunc feedback, uint64_t seed)
-      : evalFunc(feedback), rng(seed) {}
+      : evalFunc(feedback), rng(RngSource(seed)) {}
 
   /// Creates a scheduler that mutates a new program.
   /// The created Scheduler here is dead, it needs a
   /// feedback function supplied before the first run.
-  SchedulerBase(uint64_t seed) : rng(seed) {}
+  SchedulerBase(uint64_t seed) : rng(RngSource(seed)) {}
 
   Score getBestScore() const { return queue.back().score; }
 

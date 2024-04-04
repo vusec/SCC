@@ -98,7 +98,7 @@ private:
     queue.clear();
     const unsigned initQueueSize = 3;
     for (unsigned i = 0; i < initQueueSize; ++i)
-      addProgram(std::move(*gen.generate(getRandomSeed(), opts)));
+      addProgram(std::move(*gen.generate(RngSource(getRandomSeed()), opts)));
     sortQueue();
   }
 
@@ -187,7 +187,7 @@ public:
 
     auto usedScale = std::max<unsigned>(1U, rng.getBelow(mutatorScale));
     Program p = mutationBase.p;
-    gen.mutate(p, getRandomSeed(), strat.strat, usedScale);
+    gen.mutate(p, RngSource(getRandomSeed()), strat.strat, usedScale);
 
     if (!p.canPrint() || cache.isInCache(p)) {
       evaluateStrat(strat, 0);

@@ -3,16 +3,65 @@
 #include "scc/utils/SCCAssert.h"
 #include <algorithm>
 #include <cassert>
+#include <cstddef>
+#include <limits>
 #include <list>
 #include <random>
+
+struct EntrophyVec {
+  typedef unsigned char result_type;
+
+  explicit EntrophyVec(std::string_view input) {
+    for (char c : input)
+      entrophy.push_back(static_cast<result_type>(c));
+  }
+
+  result_type pop() {
+    result_type result = entrophy.back();
+    entrophy.pop_back();
+    return result;
+  }
+  bool hasData() const { return !entrophy.empty(); }
+
+private:
+  std::vector<result_type> entrophy;
+};
+
+struct RngSource {
+  typedef uint64_t Seed;
+  explicit RngSource(Seed seed) : seed(seed), gen(seed) {}
+
+  explicit RngSource(EntrophyVec &entrophy) : entrophy(&entrophy) {}
+
+  typedef EntrophyVec::result_type result_type;
+  static constexpr result_type min() { return 0; }
+  static constexpr result_type max() {
+    return std::numeric_limits<result_type>::max();
+  }
+  result_type operator()() {
+    if (entrophy && entrophy->hasData())
+      return entrophy->pop();
+    return gen();
+  }
+
+  RngSource spawnChild() {
+    (void)gen();
+    return *this;
+  }
+
+private:
+  EntrophyVec *entrophy = nullptr;
+  Seed seed = 0;
+  std::ranlux48_base gen;
+};
 
 /// Random number generation utility class.
 class Rng {
   /// The base RNG used for generating everything else.
-  std::ranlux48_base gen;
+  RngSource gen;
 
 public:
-  explicit Rng(uint64_t seed) : gen(seed) {}
+  explicit Rng(RngSource src) : gen(src) {}
 
   /// Returns a random float between 0 and 1.
   float get0To1() {
@@ -28,6 +77,11 @@ public:
 
   /// Return a new seed for another Rng instance.
   uint64_t makeSeed() { return gen(); }
+
+  Rng spawnChild() {
+    Rng result(gen.spawnChild());
+    return result;
+  }
 
   /// Returns a number below or equal the given max value.
   template <typename T> T getBelow(T max) {

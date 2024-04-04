@@ -22,7 +22,8 @@ template <typename Strategy> class StrategyInstance {
   }
 
 public:
-  StrategyInstance(size_t seed, const Strategy &s) : rng(seed), strategy(s) {}
+  StrategyInstance(RngSource rngSrc, const Strategy &s)
+      : rng(rngSrc), strategy(s) {}
 
   /// Perform a decision whether the given action should be done.
   bool decision(typename Strategy::Frag f) {

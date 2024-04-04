@@ -19,6 +19,7 @@ template <typename GeneratorT> class Reducer {
 
   /// The program that is being reduced.
   Program toReduce;
+  RngSource rngSource;
   /// The rng to use.
   Rng rng;
   /// The feedback function that determines whether a reduced program is still
@@ -57,7 +58,8 @@ template <typename GeneratorT> class Reducer {
 
 public:
   Reducer(FeedbackFunc feedback, uint64_t seed, const Program &p)
-      : toReduce(p), rng(seed), feedback(feedback) {
+      : toReduce(p), rngSource(seed), rng(rngSource), feedback(feedback) {
+    rng = Rng(rngSource);
     originalSize = lastSize = getProgSize(p);
     strategies = Strategy::makeReductionStrategies();
   }
@@ -87,7 +89,7 @@ public:
     for (unsigned i = 1; i <= mutateToReduceTries; ++i) {
       p = toReduce;
       const Strategy &strat = rng.pickOneVec(strategies);
-      auto taken = gen.reduce(p, rng.makeSeed(), strat);
+      auto taken = gen.reduce(p, rngSource, strat);
 
       // If the program is malformed, skip it.
       if (!p.canPrint())

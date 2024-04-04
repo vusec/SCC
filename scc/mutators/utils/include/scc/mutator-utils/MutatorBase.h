@@ -27,24 +27,17 @@ template <class Strategy> struct MutatorBase {
     Program &p;
     /// The strategy being used to mutate the program.
     StratInst &s;
-    /// The Rng seed that is being used.
-    size_t seed;
-    MutatorData(Program &p, StratInst &s, size_t seed)
-        : p(p), s(s), seed(seed) {}
+    /// The Rng that is being used.
+    RngSource rng;
+    MutatorData(Program &p, StratInst &s, RngSource rng)
+        : p(p), s(s), rng(rng) {}
   };
 
   MutatorBase(MutatorData &i)
       : p(i.p), idents(i.p.getIdents()), types(i.p.getTypes()),
         builtin(i.p.getBuiltin()), builtinFuncs(i.p.getBuiltinFuncs()),
-        currentRng(/*this is a dummy value updated below*/ 0), strategy(i.s),
-        mutatorData(i.p, i.s, i.seed) {
-    // Pick a different seed. This way multiple sub-generators within the same
-    // generator run don't produce the same pattern. E.g., multiple statement
-    // generators might produce the same pattern even though they were asked
-    // to fill out different function bodies.
-    ++i.seed;
-    currentRng = Rng(i.seed);
-  }
+        currentRng(i.rng.spawnChild()), strategy(i.s),
+        mutatorData(i.p, i.s, i.rng) {}
 
   auto getTakenDecisions() const { return strategy.getTakenDecisions(); }
 
